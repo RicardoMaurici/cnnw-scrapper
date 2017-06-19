@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-
 
 def index(request):
-    return HttpResponse("Index CnNw.")
+	context = {}
+	return render(request, 'webclient/index.html', context)
 
-def search(request,search_id):
-    return HttpResponse("search CnNw.")
+def search(request):
+	context = {}
+	return render(request, 'webclient/search.html', context)
 
 def config(request):
-    return HttpResponse("Config CnNw.")
+	context = {}
+	return render(request, 'webclient/config.html', context)
