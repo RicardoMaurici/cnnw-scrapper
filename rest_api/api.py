@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, Response
 from flask import jsonify
 from flask import request
+from flask import make_response as apiResponse
 from flask_pymongo import PyMongo
 
 
@@ -19,7 +20,7 @@ def get_all_tests():
     for q in tests.find():
         output.append({'name':q['name'], 'number': q['number'], 'extra_field':q['extra_field']})
 
-    return jsonify({'result': output})
+    return apiResponse(jsonify({'result': output}),200)
 
 
 @api.route('/api/<name>', methods=['GET'])
@@ -30,10 +31,11 @@ def get_one_tests(name):
 
     if document:
         output = {'name':document['name'], 'number': document['number'], 'extra_field':document['extra_field']}
+        return jsonify({'result': output})
     else:
-        output = 'No results Found'
+        return apiResponse('',404)
 
-    return jsonify({'result': output})
+
 
 @api.route('/api/<name>', methods=['POST'])
 def post_one_tests(name):
@@ -55,10 +57,6 @@ def post_one_tests(name):
         output = 'Inserted'
 
     return jsonify({'result' : output})
-
-
-
-
 
 if __name__ == '__main__':
     api.run(debug=True)
