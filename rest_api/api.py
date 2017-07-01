@@ -1,7 +1,7 @@
 from flask import Flask, Response
-from flask import jsonify
 from flask import request
 from flask import make_response as apiResponse
+from jsonpackager import jsonRaw
 from flask_pymongo import PyMongo
 
 
@@ -14,28 +14,14 @@ mongo = PyMongo(api)
 
 @api.route('/api', methods=['GET'])
 def get_all_tests():
-    tests = mongo.db.test
-
-    output =[]
-    for q in tests.find():
-        output.append({'name':q['name'], 'number': q['number'], 'extra_field':q['extra_field']})
-
-    return apiResponse(jsonify({'result': output}),200)
+    document = mongo.db.test.find()
+    return apiResponse(jsonRaw(document))
 
 
 @api.route('/api/<name>', methods=['GET'])
 def get_one_tests(name):
-    tests = mongo.db.test
-
-    document = tests.find_one({'name':name})
-
-    if document:
-        output = {'name':document['name'], 'number': document['number'], 'extra_field':document['extra_field']}
-        return jsonify({'result': output})
-    else:
-        return apiResponse('',404)
-
-
+    document = mongo.db.test.find_one({'name':name})
+    return apiResponse(jsonRaw(document))
 
 @api.route('/api/<name>', methods=['POST'])
 def post_one_tests(name):
