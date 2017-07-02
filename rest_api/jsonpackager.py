@@ -1,5 +1,18 @@
 from flask import jsonify
 
+API_DATA_KEYS = (
+    'title',
+    'news_date',
+    'scrapped_date',
+    'domain',
+    'url',
+    'categories',
+    'key_words',
+    'people',
+    'companies',
+    'news_text'
+)
+
 def jsonRaw(raw):
     """
     Takes the raw input and return in the json format
@@ -18,9 +31,8 @@ def jsonRaw(raw):
     if type(raw) is dict:
         output = format_dict(raw)
     else:
-        for q in raw:
-            output.append(format_dict(q))
-    return jsonify({'result': output})
+        output = [format_dict(x) for x in raw]
+    return jsonify(output)
 
 def format_dict(raw_dict):
     """
@@ -35,7 +47,4 @@ def format_dict(raw_dict):
     dict
         formated dict
     """
-    return {'name':raw_dict['name'],
-            'number': raw_dict['number'],
-            'extra_field':raw_dict['extra_field']
-            }
+    return {key: raw_dict[key] for key in API_DATA_KEYS}
