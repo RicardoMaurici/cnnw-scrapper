@@ -29,22 +29,23 @@ def jsonRaw(raw):
     """
     output = []
     if type(raw) is dict:
-        output = format_dict(raw)
+        output = format_dict(raw, API_DATA_KEYS)
     else:
-        output = [format_dict(x) for x in raw]
+        output = [format_dict(x, API_DATA_KEYS) for x in raw]
     return jsonify(output)
 
-def format_dict(raw_dict):
+def format_dict(raw_dict, keys_list):
     """
-    Takes the raw dict and return a f formated one
+    Takes the raw dict and return a f formated one given a list of keys
 
     Parameters
     ----------
     raw_dict : dict
+    keys_list : list
 
     Returns
     -------
     dict
         formated dict
     """
-    return {key: raw_dict[key] for key in API_DATA_KEYS}
+    return {key: raw_dict[key] for key in keys_list}
