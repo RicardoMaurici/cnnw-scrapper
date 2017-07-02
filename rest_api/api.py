@@ -17,39 +17,27 @@ mongo = PyMongo(api)
 @api.route('/api/v1/news', methods=['GET', 'POST', 'OPTIONS'])
 def api_news():
     if request.method == 'GET':
-        all_documents = mongo.db.news.find()
-        return apiResponse(jsonRaw(all_documents))
+        filters_keys = [key for key in request.args.keys() if key in API_DATA_KEYS]
+        filter_dict = format_dict(request.args.to_dict(), filters_keys)
+        all_documents = mongo.db.news.find(filter_dict)
+        if all_documents.count() > 0:
+            return apiResponse(jsonRaw(all_documents))
+        else:
+            return apiResponse('',404)
 
     elif request.method == 'POST':
         news_collection = mongo.db.news
-        newDocummentId = news_collection.insert(format_dict(request.json))
-        print newDocummentId
+        newDocummentId = news_collection.insert(format_dict(request.json, API_DATA_KEYS))
         if news_collection.find_one({'_id': newDocummentId }):
             return apiResponse(jsonify({'_id': str(newDocummentId) }), 201)
         else:
-            return apiResponse('', 400)
+            return apiResponse('Could not create resource', 500)
 
     elif request.method == 'OPTIONS':
-        return "options"
+        return "list options"
 
     else:
         return apiResponse('',405)
-
-@api.route('/api/v1/news/companies/<company>', methods=['GET'])
-def api_news_companies(company):
-    all_documents = mongo.db.news.find({ "companies": str(company)})
-    if all_documents.count() > 0:
-        return apiResponse(jsonRaw(all_documents))
-    else:
-        return apiResponse('',404)
-
-@api.route('/api/v1/news/people/<person>', methods=['GET'])
-def api_news_person(person):
-    all_documents = mongo.db.news.find({ "people": str(person)})
-    if all_documents.count() > 0:
-        return apiResponse(jsonRaw(all_documents))
-    else:
-        return apiResponse('',404)
 
 
 if __name__ == '__main__':
