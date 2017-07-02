@@ -1,0 +1,35 @@
+db.news.insert({
+	"domain" : "veja.abril.com.br",
+	"people" : [
+		"Rodrigo Janot",
+		"Michel Temer",
+		"Marcelo de Azeredo",
+		"Erika Santos",
+		"João Baptista Lima",
+		"Eduardo Cunha",
+		"Marco Aurelio Mello"
+	],
+	"companies" : [
+		"Grupo Rodrimar",
+		"Companhia Docas",
+		"Jbs",
+		"Grupo Libra",
+		"Veja"
+	],
+	"news_date" : new ISODate("2017-06-30T00:00:00.000Z"),
+	"categories" : [
+		"Corrupçao"
+	],
+	"title" : "Temer estava na planilha da propina do Porto de Santos em 2001",
+	"url" : "http://veja.abril.com.br/brasil/temer-estava-na-planilha-da-propina-do-porto-de-santos-em-2001/",
+  "news_text" : " O procurador-Geral da República, Rodrigo Janot, prepara uma nova ofensiva contra o presidente Michel Temer relacionada ao Porto de Santos, a mais tradicional área de influência do peemedebista na máquina pública. Janot já pediu a abertura de um inquérito para apurar se Temer beneficiou indevidamente a empresa Rodrimar, que atua no porto, ao editar um decreto. Agora, o procurador quer reabrir uma investigação que poderá comprovar que os laços entre Temer e a Rodrimar são bem mais antigos e foram estreitados, ao longo dos anos, por meio do pagamento de propinas.O primeiro passo nesse sentido foi dado na terça-feira passada, quando Janot pediu vista dos autos de um antigo inquérito, de número 3.105, que apurava a suspeita de que a Rodrimar pagou, no início da década passada, propina ao então deputado Michel Temer. Este caso foi divulgado por VEJA em 2001 e acabou arquivado, a pedido da própria PGR, dez anos depois. Diante da suspeita de que Temer beneficiou a Rodrimar também no exercício da Presidência, Janot decidiu reexaminar a antiga denúncia.As primeira pistas sobre as relações umbilicais entre Temer e a Rodrimar chegaram à Justiça, no início dos anos 2000, no bojo de um processo de separação litigiosa entre Marcelo de Azeredo, que presidiu a Companhia Docas do Estado de São Paulo (Codesp), por indicação de Temer, e Erika Santos. Numa tentativa de conseguir um valor maior na partilha de bens, Erika entregou planilhas nas quais relatava um esquema de corrupção no Porto de Santos.Segundo as planilhas apresentadas por Erika, pelo menos seis contratos renderam dinheiro sujo a Temer, Azeredo e “um tal de Lima”, que, suspeita-se, seja o coronel João Baptista Lima, acusado pela JBS de receber dinheiro sujo em nome do presidente da República.  Os papéis entregues por Erika mostram que a Rodrimar desembolsou 600.000 reais para o esquema. Metade do valor teria sido destinado a Temer. O restante, dividido em parte iguais entre Azeredo e o tal Lima. O rateio do butim sempre respeitaria esse percentual. Os documentos mostravam que o grupo Libra, gigante do setor de portos, pagou propina.Na campanha presidencial de 2014, dois acionistas da Libra doaram 1 milhão de reais a Temer, então candidato à reeleição. Em relatório divulgado por VEJA no início deste ano, a Polícia Federal diz que o dinheiro pode ter sido repassado como contrapartida pela aprovação da MP dos Portos, cujo relator na Câmara, o então deputado Eduardo Cunha, hoje preso e cassado, fazia as vezes de caixa informal do presidente da República. A denúncia de pagamento de propina da Rodrimar ao então deputado Temer foi arquivada em 2011 pelo ministro Marco Aurélio Mello. Relator do caso, Marco Aurélio decidiu que vai reabrir o inquérito se houver pedido de Janot nesse sentido.",
+  "scrapped_date" : new ISODate("2017-06-30T00:00:00.000Z"),
+	"key_words" : [
+		"Procurador Geral da República",
+		"Presidente",
+		"Ministerio Público Federal",
+		"Esquema",
+		"Propina",
+		"Polícia Federal"
+	]
+});
