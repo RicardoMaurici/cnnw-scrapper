@@ -35,5 +35,22 @@ def api_news():
     else:
         return apiResponse('',405)
 
+@api.route('/api/v1/news/companies/<company>', methods=['GET'])
+def api_news_companies(company):
+    all_documents = mongo.db.news.find({ "companies": str(company)})
+    if all_documents.count() > 0:
+        return apiResponse(jsonRaw(all_documents))
+    else:
+        return apiResponse('',404)
+
+@api.route('/api/v1/news/people/<person>', methods=['GET'])
+def api_news_person(person):
+    all_documents = mongo.db.news.find({ "people": str(person)})
+    if all_documents.count() > 0:
+        return apiResponse(jsonRaw(all_documents))
+    else:
+        return apiResponse('',404)
+
+
 if __name__ == '__main__':
     api.run(debug=True)
