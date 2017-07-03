@@ -4,7 +4,7 @@
 
 from flask import Flask, Response, jsonify, request
 from flask import make_response as apiResponse
-from jsonpackager import jsonRaw, format_dict, API_DATA_KEYS
+from utilApi import jsonRaw, format_dict, API_DATA_KEYS, API_DOC
 from flask_pymongo import PyMongo
 
 api = Flask(__name__)
@@ -16,6 +16,23 @@ mongo = PyMongo(api)
 
 @api.route('/api/v1/news', methods=['GET', 'POST', 'OPTIONS'])
 def api_news():
+    """
+    News Api for neoway-one team Project
+
+    For more info:
+
+    OPTIONS on /api/v1/news
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    json
+        json of the filtered news
+
+    """
     if request.method == 'GET':
         filters_keys = [key for key in request.args.keys() if key in API_DATA_KEYS]
         filter_dict = format_dict(request.args.to_dict(), filters_keys)
@@ -31,10 +48,10 @@ def api_news():
         if news_collection.find_one({'_id': newDocummentId }):
             return apiResponse(jsonify({'_id': str(newDocummentId) }), 201)
         else:
-            return apiResponse('Could not create resource', 500)
+            return apiResponse('Could not create resource', 400)
 
     elif request.method == 'OPTIONS':
-        return "list options"
+        return apiResponse(API_DOC)
 
     else:
         return apiResponse('',405)
