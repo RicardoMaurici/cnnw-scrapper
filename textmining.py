@@ -1,13 +1,15 @@
 # coding=utf-8
 
-
 from unicodedata import normalize
-
-def removeAccents(txt, codif='utf-8'):
-    return normalize('NFKD', txt.decode(codif)).encode('ASCII','ignore')
 
 characters_to_remove = ('"','“','”','\\','`','*','_','{','}','[',']','(',')','>',
 '#','+','-','.','!','$','\'',',','/',':','<','%')
+
+def removeAccents(string_param, codif='utf-8'):
+    '''
+    Remove accents of a string
+    '''
+    return normalize('NFKD', string_param.decode(codif)).encode('ASCII','ignore')
 
 def removeChars(string_param):
     '''
@@ -16,5 +18,7 @@ def removeChars(string_param):
     clean_string = string_param
     for char in characters_to_remove:
         clean_string = clean_string.replace(char, ' ')
-    clean_string = removeAccents(clean_string)
     return clean_string
+
+def clearString(string_param):
+    return removeAccents(removeChars(string_param))
