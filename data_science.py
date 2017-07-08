@@ -1,6 +1,5 @@
 import nltk
 
-#stem in portuguese example
 stemmer = nltk.stem.RSLPStemmer()
 print stemmer.stem('copiar')
 print stemmer.stem('copiando')
@@ -19,5 +18,7 @@ print set(list_of_words)
 
 
 #florest for tokeninzation
-from nltk.corpus import floresta
+from nltk.corpus import stopwords
 #print floresta.tagged_sents()
+
+stopwords = nltk.corpus.stopwords.words('portuguese')
