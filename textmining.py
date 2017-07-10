@@ -43,12 +43,9 @@ def stemmize(param):
 
 def clearString(string_param):
     '''
-    Return the string without special chars, digits and accents. Also stemm of the
-    words
+    Return the string without accents and remove extra spaces
     '''
-    cleanString = removeAccents(cleanString)
-    cleanString = removeChars(string_param)
-    cleanString = removeNumbers(cleanString)
-    cleanString = stemmize(cleanString.split())
-    cleanString = " ".join(cleanString)
-    return cleanString
+    clean_string = removeAccents(string_param)
+    clean_string = clean_string.split()
+    clean_string = " ".join(clean_string)
+    return clean_string
