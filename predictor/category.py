@@ -20,6 +20,15 @@ ctg_lr = LogisticRegression()
 ctg_lr.fit(X_ctg_train_dtm, z_train)
 
 def predictCategory(string_arg):
+    """
+    Predicts a category of a news based on the news body
+    ---
+    Args: news body
+        String
+    ---
+    Return: the category
+        String
+    """
     text_tdm = ctg_vect.transform([string_arg])
     text_tdm.toarray()
     text_pred_class = ctg_lr.predict(text_tdm)

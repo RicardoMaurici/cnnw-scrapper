@@ -20,6 +20,15 @@ risk_lr = LogisticRegression()
 risk_lr.fit(X_risk_train_dtm, y_train)
 
 def predictRisk(string_arg):
+    """
+    Predicts a risk of a news based on the news body
+    ---
+    Args: news body
+        String
+    ---
+    Return: the risk
+        String
+    """
     text_tdm = risk_vect.transform([string_arg])
     text_tdm.toarray()
     text_pred_class = risk_lr.predict(text_tdm)
