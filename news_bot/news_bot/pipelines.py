@@ -6,9 +6,9 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
 import codecs
-
 from data_manipulation import ProcessData
 
 class DataPipeline(object):
 	def process_item(self, item, spider):
-		ProcessData.process_data(item)
+		processor = ProcessData()
+		processor.process_data(item)

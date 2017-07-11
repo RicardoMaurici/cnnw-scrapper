@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-class ProcessData():
-    def process_data(data):
+class ProcessData(object):
+    def process_data(self, data):
     	print(data)
