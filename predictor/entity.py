@@ -1,7 +1,9 @@
 import spacy
+import os
 from translate import translate, PT_BR, ENG
 
 #instalation of the required package
+#print "Installing 'en' package."
 #os.system("python -m spacy download en")
 
 #globals
@@ -21,7 +23,7 @@ def predictEntities(string_arg):
     #translate to english
     string_arg = translate(string_arg, ENG)
     #feed the model
-    doc = nlp(unicode(string_arg, encoding))
+    doc = nlp(string_arg)
     #filter entities
     output =  [ent.text for ent in doc.ents if (ent.label_ == 'ORG' or
                     ent.label_ == 'PERSON')]
