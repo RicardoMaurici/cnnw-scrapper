@@ -2,6 +2,7 @@
 import time
 from predictor.risk import predictRisk
 from predictor.category import predictCategory
+from predictor.entity import predictPeople, predictCompanies
 from textmining import clearString
 
 def test_performance(string_param):

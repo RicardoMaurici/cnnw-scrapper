@@ -1,7 +1,7 @@
 # encoding: utf-8
 # DEPRECATED
 
-import nltk
+#import nltk
 from unicodedata import normalize
 from string import digits
 
