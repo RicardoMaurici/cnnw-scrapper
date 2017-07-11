@@ -1,16 +1,16 @@
 import spacy
-#import function of english translation
+from translate import translate, PT_BR, ENG
 
 #instalation of the required package
-os.system("python -m spacy download en")
+#os.system("python -m spacy download en")
 
 #globals
 encoding = 'utf-8'
 nlp = spacy.load('en')
 
-def predictPeople(string_arg):
+def predictEntities(string_arg):
     """
-    Predicts the people of a news based on the news body
+    Predicts the entities of a news based on the news body
     ---
     Args: news body
         String
@@ -18,26 +18,15 @@ def predictPeople(string_arg):
     Return: the entities
         List of strings
     """
-    #add the translation function
-    #string_arg = translate(string_arg)
+    #translate to english
+    string_arg = translate(string_arg, ENG)
+    #feed the model
     doc = nlp(unicode(string_arg, encoding))
-    output =  [ent.text for ent in doc.ents if ent.label_ == 'PERSON']
-    return list(set(output))
-
-def predictCompanies(string_arg):
-    """
-    Predicts the companies of a news based on the news body
-    ---
-    Args: news body
-        String
-    ---
-    Return: the entities
-        List of strings
-    """
-    #add the translation function
-    #string_arg = translate(string_arg)
-    doc = nlp(unicode(string_arg, encoding))
-    output =  [ent.text for ent in doc.ents if ent.label_ == 'ORG']
+    #filter entities
+    output =  [ent.text for ent in doc.ents if (ent.label_ == 'ORG' or
+                    ent.label_ == 'PERSON')]
+    #remove repeated
     output = list(set(output))
-    #output = [translate(company) for company in output]
+    #translate back to portuguese
+    output = [translate(entity, PT_BR) for entity in output]
     return output
