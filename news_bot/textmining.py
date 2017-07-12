@@ -43,9 +43,8 @@ def stemmize(param):
 
 def clearString(string_param):
     '''
-    Return the string without accents and remove extra spaces
+    Return the string without extra spaces
     '''
-    clean_string = removeAccents(string_param)
-    clean_string = clean_string.split()
+    clean_string = string_param.split()
     clean_string = " ".join(clean_string)
     return clean_string

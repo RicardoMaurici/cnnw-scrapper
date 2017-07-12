@@ -1,31 +1,81 @@
 # -*- coding: utf-8 -*-
-
 import pytz
-
+import datetime
+import time
+from predictor.risk import predictRisk
+from predictor.category import predictCategory
+from predictor.entity import predictEntities
+from predictor.tags import predictTags
+from textmining import removeAccents, removeChars, removeNumbers, clearString
+from util_mongo_api import checkExistence, storeNews
 
 
 class ProcessData(object):
     def process_data(self, data):
+        start = time.time()
         news = dict(data)
-
         #verify if url exists in the mongo db
+        if checkExistence(news['link']) == False:
+            #append headline into news body if exists
+            if 'headline' in news.keys():
+                headline = list()
+                headline.append(news['headline'])
+                news['body'] =  headline + news['body']
 
-        #concatenate headline and body and remove headline key
+            #trasnform body into a big clean string
+            body = clearString(" ".join(news['body']))
+            #leave function if string has less than 100 characters
+            bodysize = len(body)
+            if bodysize < 100:
+                return
 
-        #trasnform body into a big string
+            #saves clean body
+            news['body'] = body[:500]
 
-        #copy the body to another var and remove accents, characters and extra spaces
+            #get published date and delete date key
+            news['published_date'] = news['date']
+            del news['date']
 
-        #predic entities
+            #get scraped date
+            news['scrapped_date'] = datetime.datetime.now(pytz.timezone(
+                'America/Sao_Paulo')).strftime('%d-%m-%Y %H:%M:%S')
 
-        #predict risk
+            #rename keys link to url
+            news['url'] = news['link']
+            del news['link']
 
-        #predic category
+            #remove numbers and chars from body
+            body = removeChars(body.encode('utf8'))
+            body = removeNumbers(body.encode('utf8'))
 
-        #predic tags
+            #predic entities
+            news['entities'] = predictEntities(body)
 
-        #get published data and delete date key
+            #remove accents from body
+            body = removeAccents(body)
 
-        #get scraped date
+            #predict risk
+            news['risk'] = predictRisk(body)
 
-        #store in the mongodb
+            #predict category
+            news['categories'] = predictCategory(body)
+            if 'category' in news.keys():
+                del news['category']
+
+            #predic tags
+            news['tags'] = predictTags(body)
+
+            #store in the mongodb
+            status = storeNews(news)
+            if status == True:
+                print "********* Storage in mongo successful! ***********"
+            else:
+                print "------------ Storage in mongo failed! ------------"
+
+            #print process_data time for the news
+            end = time.time()
+            print "****** time for {} chars :{}".format(bodysize, end - start)
+
+        else:
+            print "********************************************"
+            print "News already in the mongodb, passing to next"
