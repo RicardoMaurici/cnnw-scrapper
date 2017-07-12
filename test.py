@@ -3,6 +3,7 @@ import time
 from predictor.risk import predictRisk
 from predictor.category import predictCategory
 from predictor.entity import predictEntities
+from predictor.tags import predictTags
 
 from textmining import clearString
 
@@ -13,7 +14,7 @@ def test_performance(string_param):
     ---
     args : String
     """
-    for func in [predictRisk, predictCategory, predictEntities]:
+    for func in [predictRisk, predictCategory, predictEntities, predictTags]:
         start = time.time()
         answer = func(string_param)
         print "predicted: {}".format(answer)
