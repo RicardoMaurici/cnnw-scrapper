@@ -9,6 +9,6 @@
 
 ### Getting started
 
-* '''cd news_bot '''
-* '''scrapy list '''
-* '''scrapy crawl <spider_name> '''
+> cd news_bot
+> scrapy list
+> scrapy crawl spider_name 
