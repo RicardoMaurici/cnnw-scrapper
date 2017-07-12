@@ -44,6 +44,12 @@ class ProcessData(object):
             news['url'] = news['link']
             del news['link']
 
+            #getting domain
+            url = news['url']
+            domain = [word for word in url.split('/') if
+                ('.com' in word) or ('.br' in word) or ('.org' in word)]
+            news['domain'] = domain.pop()
+
             #remove numbers and chars from body
             body = removeChars(body.encode('utf8'))
             body = removeNumbers(body.encode('utf8'))
