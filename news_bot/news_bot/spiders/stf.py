@@ -8,14 +8,48 @@ class StfSpider(scrapy.Spider):
     start_urls = ['http://www.stf.jus.br/portal/cms/listarNoticiaUltima.asp']
 
     def parse(self, response):
-        for article in response.xpath('//*[@class="buscarNoticiasx"]/*/*/*'):
-            item = NewsBotItem()
-            item['title'] = article.xpath('.//*/*/*/*/text()').extract_first().strip()
-            #item['headline'] = article.xpath(".//h4/text()").extract_first().strip()
-            #item['category'] = article.xpath(".//span[@class='subtitle']/text()").extract_first()
-            #item['link'] = article.xpath(".//h3/a/@href").extract_first().strip()
-            item['date'] = article.xpath('.//*/*/*/text()').extract_first().strip()
-            yield item
+        item = NewsBotItem()
+        item['title'] = response.xpath('//h3/a/text()').extract_first().strip()
+        item['headline'] = response.xpath("//h4/text()").extract_first().strip()
+        item['link'] = response.xpath(".//h3/a/@href").extract_first().strip()
+        request = scrapy.Request(item['link'], callback=self.parse_linkpage)
+        request.meta['item'] = item
+        yield request
 
-            #// *[ @ id = "divImpressao"] / table[2] / tbody / tr / td / table[1] / tbody / tr / td / span[2] / a
-            #// *[ @ id = "divImpressao"] / table[2] / tbody / tr / td / table[2] / tbody / tr / td / span[2] / a / text()
+        for article in response.xpath('//*[@width="445px"]'):
+            item = NewsBotItem()
+            item['title'] = article.xpath('.//span[2]/a/text()').extract_first().strip()
+            item['date'] = article.xpath('.//span/text()').extract_first().strip()
+            item['link'] = "http://www.stf.jus.br/portal/cms/" + article.xpath(".//span[2]/a[@class='noticia']/@href").extract_first().strip()
+            request = scrapy.Request(item['link'], callback=self.parse_linkpage)
+            request.meta['item'] = item
+            yield request
+
+        next_page = response.xpath('//*[@style="text-align:right; border-bottom:1px solid #DFE8ED; width:71%;"]/a/@href').extract_first().strip()
+        if next_page is not None:
+            next_page = "http://www.stf.jus.br/portal/cms/" + next_page
+            next_page = response.urljoin(next_page)
+            yield scrapy.Request(next_page, callback=self.parse_page)
+
+    def parse_linkpage(self, response):
+        item = response.meta['item']
+        item['body'] = response.xpath('//*[@class="conteudo"]/*/p/text()').extract()
+        item['date'] = response.xpath('//*[@class="conteudo"]/span/text()').extract_first().strip()
+        yield item
+
+
+    def parse_page(self, response):
+        for article in response.xpath('//*[@width="445px"]'):
+            item = NewsBotItem()
+            item['title'] = article.xpath('.//span[2]/a/text()').extract_first().strip()
+            item['date'] = article.xpath('.//span/text()').extract_first().strip()
+            item['link'] = "http://www.stf.jus.br/portal/cms/" + article.xpath(".//span[2]/a[@class='noticia']/@href").extract_first().strip()
+            request = scrapy.Request(item['link'], callback=self.parse_linkpage)
+            request.meta['item'] = item
+            yield request
+
+        next_page = response.xpath('//*[@style="text-align:right; border-bottom:1px solid #DFE8ED; width:71%;"]/a/@href').extract_first().strip()
+        if next_page is not None:
+            next_page = "http://www.stf.jus.br/portal/cms/" + next_page
+            next_page = response.urljoin(next_page)
+            yield scrapy.Request(next_page, callback=self.parse_page)

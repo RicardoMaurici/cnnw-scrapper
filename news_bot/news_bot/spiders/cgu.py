@@ -20,6 +20,11 @@ class MpfSpider(scrapy.Spider):
             request.meta['item'] = item
             yield request
 
+        next_page = response.xpath('//a[@class="proximo"]/@href').extract_first().strip()
+        if next_page is not None:
+            next_page = response.urljoin(next_page)
+            yield scrapy.Request(next_page, callback=self.parse)
+
     def parse_linkpage(self, response):
         item = response.meta['item']
         item['body'] = response.xpath('//div[@property="rnews:articleBody"]/p/text()').extract()

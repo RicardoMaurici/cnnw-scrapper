@@ -13,7 +13,8 @@ BOT_NAME = 'news_bot'
 
 SPIDER_MODULES = ['news_bot.spiders']
 NEWSPIDER_MODULE = 'news_bot.spiders'
-ITEM_PIPELINES = {'news_bot.pipelines.JsonWithEncodingPipeline':300}
+ITEM_PIPELINES = {'news_bot.pipelines.DataPipeline':300}
+LOG_LEVEL = 'INFO'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'news_bot (+http://www.yourdomain.com)'
