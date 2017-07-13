@@ -1,1 +1,1 @@
-web: python install.py
+web: python news_bot/veja.py
