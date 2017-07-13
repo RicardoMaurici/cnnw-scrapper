@@ -6,7 +6,7 @@ from predictor.risk import predictRisk
 from predictor.category import predictCategory
 from predictor.entity import predictEntities
 from predictor.tags import predictTags
-from textmining import removeAccents, removeChars, removeNumbers, clearString
+from predictor.textmining import removeAccents, removeChars, removeNumbers, clearString
 from util_mongo_api import checkExistence, storeNews
 
 
