@@ -4,7 +4,7 @@ from translate import translate, PT_BR, ENG
 
 #instalation of the required package
 #print "Installing 'en' package."
-os.system("python -m spacy download en")
+#os.system("python -m spacy download en")
 
 #globals
 encoding = 'utf-8'
