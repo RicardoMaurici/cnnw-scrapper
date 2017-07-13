@@ -1,3 +1,3 @@
 import os
 
-os.system("scrapy crawl veja")
+os.system("cd news_bot/; scrapy crawl veja")
