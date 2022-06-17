@@ -20,7 +20,7 @@ incremental==17.5.0
 ipaddress==1.0.18
 lxml==3.8.0
 murmurhash==0.26.4
-numpy==1.13.1
+numpy==1.21.0
 pandas==0.20.3
 parsel==1.2.0
 pathlib==1.0.1
