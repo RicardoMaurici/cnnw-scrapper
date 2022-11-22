@@ -46,7 +46,7 @@ termcolor==1.1.0
 thinc==6.5.2
 toolz==0.8.2
 tqdm==4.14.0
-Twisted==17.5.0
+Twisted==22.10.0
 ujson==5.4.0
 urllib3==1.26.5
 w3lib==1.17.0
